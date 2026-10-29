@@ -34,8 +34,8 @@ export default function FeedPage() {
   }
 
   return (
-    <main className='min-h-screen bg-black text-neutral-25'>
-      <div className='mx-auto w-full max-w-150 px-4 py-8xl md:px-0 md:py-30'>
+    <main className='min-h-screen w-full bg-black text-neutral-25'>
+      <div className='mx-auto w-full min-w-0 max-w-150 px-4 py-8xl md:px-0 md:py-30'>
         {data.data.posts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}

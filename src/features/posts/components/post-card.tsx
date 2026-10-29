@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { likePost, unlikePost } from '@/features/posts/api';
 import Image from 'next/image';
-import { Heart, MessageCircle, Send, Bookmark } from 'lucide-react';
+import { Heart, Bookmark } from 'lucide-react';
 import type { Post } from '@/features/posts/types';
 import { getComments } from '@/features/posts/api';
 import { LikesModal } from './likes-modal';
@@ -149,14 +149,17 @@ export function PostCard({ post }: PostCardProps) {
       </div>
 
       {post.caption && (
-        <p className='text-sm leading-6 text-neutral-25 md:text-base'>
+        <p className='min-w-0 max-w-full wrap-break-words text-sm leading-6 text-neutral-25 md:text-base'>
           <span className='mr-2 font-bold'>{post.author.username}</span>
           {post.caption}
         </p>
       )}
 
       {commentsData?.data.comments.map((comment) => (
-        <div key={comment.id} className='text-sm text-neutral-25'>
+        <div
+          key={comment.id}
+          className='min-w-0 max-w-full wrap-break-words text-sm text-neutral-25'
+        >
           <span className='mr-2 font-bold'>{comment.author.username}</span>
           {comment.text}
         </div>

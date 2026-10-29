@@ -1,25 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+
 import { Home, Plus, UserRound } from 'lucide-react';
 
-const navigationItems = [
-  {
-    label: 'Home',
-    href: '/feed',
-    icon: Home,
-  },
-  {
-    label: 'Profile',
-    href: '/me',
-    icon: UserRound,
-  },
-];
-
 export function BottomNavigation() {
-  const pathname = usePathname();
-
   return (
     <nav
       aria-label='Navigasi utama'
