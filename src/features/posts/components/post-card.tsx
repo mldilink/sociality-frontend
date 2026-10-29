@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { likePost, unlikePost } from '@/features/posts/api';
 import Image from 'next/image';
 import { Heart, Bookmark } from 'lucide-react';
 import type { Post } from '@/features/posts/types';
-import { getComments } from '@/features/posts/api';
 import { LikesModal } from './likes-modal';
+import { CommentsModal } from './comments-modal';
 
 interface PostCardProps {
   post: Post;
@@ -19,11 +19,6 @@ export function PostCard({ post }: PostCardProps) {
   const [likeCount, setLikeCount] = useState(post.likeCount);
   const [showComments, setShowComments] = useState(false);
   const [showLikes, setShowLikes] = useState(false);
-
-  const { data: commentsData } = useQuery({
-    queryKey: ['comments', post.id],
-    queryFn: () => getComments(post.id, 1, 1),
-  });
 
   const likeMutation = useMutation({
     mutationFn: (shouldLike: boolean) =>
@@ -114,7 +109,7 @@ export function PostCard({ post }: PostCardProps) {
             type='button'
             aria-label='Komentar'
             className='flex items-center gap-1 text-neutral-25'
-            onClick={() => setShowComments((visible) => !visible)}
+            onClick={() => setShowComments(true)}
           >
             <Image
               src='/icons/comment-icon.svg'
@@ -155,25 +150,10 @@ export function PostCard({ post }: PostCardProps) {
         </p>
       )}
 
-      {commentsData?.data.comments.map((comment) => (
-        <div
-          key={comment.id}
-          className='min-w-0 max-w-full wrap-break-words text-sm text-neutral-25'
-        >
-          <span className='mr-2 font-bold'>{comment.author.username}</span>
-          {comment.text}
-        </div>
-      ))}
-
-      {post.commentCount > 1 && (
-        <button
-          type='button'
-          onClick={() => setShowComments(true)}
-          className='self-start text-sm text-primary-200'
-        >
-          Show More
-        </button>
+      {showComments && (
+        <CommentsModal post={post} onClose={() => setShowComments(false)} />
       )}
+
       {showLikes && (
         <LikesModal postId={post.id} onClose={() => setShowLikes(false)} />
       )}
