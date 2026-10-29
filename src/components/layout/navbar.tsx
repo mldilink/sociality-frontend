@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, Search, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getToken, getUser } from '@/features/auth/auth-storage';
 
 import { UserSearch } from '@/features/users/components/user-search';
@@ -12,17 +12,15 @@ import { DesktopUserSearch } from '@/features/users/components/dekstop-user-sear
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<ReturnType<typeof getUser> | null>(null);
 
-  const [auth] = useState(() => {
+  useEffect(() => {
     const token = getToken();
 
-    return {
-      isLoggedIn: Boolean(token),
-      user: token ? getUser() : null,
-    };
-  });
-
-  const { isLoggedIn, user } = auth;
+    setIsLoggedIn(Boolean(token));
+    setUser(token ? getUser() : null);
+  }, []);
 
   return (
     <header className='fixed left-0 top-0 z-50 w-full max-w-full border-b border-neutral-900 bg-black'>
