@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { Bookmark, ArrowLeft, UserRound } from 'lucide-react';
 import Image from 'next/image';
 import { getMyPosts, getMyProfile } from '@/features/users/api';
+import { getMySavedPosts } from '@/features/posts/api';
+import { useQuery } from '@tanstack/react-query';
 import type { Post } from '@/features/posts/types';
 
 import type {
@@ -20,6 +22,18 @@ export default function MyProfile() {
   const [stats, setStats] = useState<MyProfileStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const {
+    data: savedResponse,
+    isPending: isSavedLoading,
+    isError: isSavedError,
+  } = useQuery({
+    queryKey: ['saved-posts'],
+    queryFn: () => getMySavedPosts(1, 20),
+    enabled: activeTab === 'saved',
+  });
+
+  const savedPosts = savedResponse?.data.posts ?? [];
 
   useEffect(() => {
     let isMounted = true;
@@ -223,19 +237,19 @@ export default function MyProfile() {
         {/* Gallery */}
         {activeTab === 'grid' ? (
           isPostsLoading ? (
-            <p className='py-12 text-center text-sm text-neutral-400'>
+            <p className='py-12 text-center text-sm text-[#A4A7AE]'>
               Memuat postingan...
             </p>
           ) : postsError ? (
-            <p className='py-12 text-center text-sm text-neutral-400'>
+            <p className='py-12 text-center text-sm text-[#A4A7AE]'>
               {postsError}
             </p>
-          ) : posts?.length > 0 ? (
+          ) : posts.length > 0 ? (
             <div className='grid grid-cols-3 gap-[2px] md:gap-1'>
               {posts.map((post) => (
                 <div
                   key={post.id}
-                  className='relative aspect-square overflow-hidden rounded-xxs bg-neutral-900 md:rounded-md'
+                  className='relative aspect-square overflow-hidden rounded-[2px] bg-[#181D27] md:rounded-md'
                 >
                   <Image
                     src={post.imageUrl}
@@ -249,14 +263,40 @@ export default function MyProfile() {
               ))}
             </div>
           ) : (
-            <p className='py-12 text-center text-sm text-neutral-400'>
+            <p className='py-12 text-center text-sm text-[#A4A7AE]'>
               Belum ada postingan.
             </p>
           )
-        ) : (
-          <div className='py-16 text-center text-sm text-neutral-400'>
-            Belum ada postingan tersimpan.
+        ) : isSavedLoading ? (
+          <p className='py-12 text-center text-sm text-[#A4A7AE]'>
+            Memuat Saved...
+          </p>
+        ) : isSavedError ? (
+          <p className='py-12 text-center text-sm text-[#A4A7AE]'>
+            Gagal memuat postingan tersimpan.
+          </p>
+        ) : savedPosts.length > 0 ? (
+          <div className='grid grid-cols-3 gap-[2px] md:gap-1'>
+            {savedPosts.map((post) => (
+              <div
+                key={post.id}
+                className='relative aspect-square overflow-hidden rounded-[2px] bg-[#181D27] md:rounded-md'
+              >
+                <Image
+                  src={post.imageUrl}
+                  alt={post.caption || `Saved post ${post.id}`}
+                  fill
+                  unoptimized
+                  sizes='(max-width: 767px) 33vw, 268px'
+                  className='object-cover'
+                />
+              </div>
+            ))}
           </div>
+        ) : (
+          <p className='py-12 text-center text-sm text-[#A4A7AE]'>
+            Belum ada postingan tersimpan.
+          </p>
         )}
       </section>
     </main>

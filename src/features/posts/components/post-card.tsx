@@ -1,8 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { likePost, unlikePost } from '@/features/posts/api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  likePost,
+  unlikePost,
+  savePost,
+  unsavePost,
+  getMySavedPosts,
+} from '@/features/posts/api';
 import Image from 'next/image';
 import { Heart, Bookmark } from 'lucide-react';
 import type { Post } from '@/features/posts/types';
@@ -31,10 +37,59 @@ export function PostCard({ post }: PostCardProps) {
     },
   });
 
+  const { data: savedResponse } = useQuery({
+    queryKey: ['saved-posts'],
+    queryFn: () => getMySavedPosts(1, 20),
+  });
+
+  const savedFromServer =
+    savedResponse?.data.posts.some((item) => item.id === post.id) ?? false;
+
+  const [savedOverride, setSavedOverride] = useState<boolean | null>(null);
+
+  const saved = savedOverride ?? savedFromServer;
+
+  const saveMutation = useMutation({
+    mutationFn: (shouldSave: boolean) =>
+      shouldSave ? savePost(post.id) : unsavePost(post.id),
+
+    onSuccess: (_, shouldSave) => {
+      setSavedOverride(shouldSave);
+
+      queryClient.setQueryData(
+        ['saved-posts'],
+        (current: Awaited<ReturnType<typeof getMySavedPosts>> | undefined) => {
+          if (!current) return current;
+
+          return {
+            ...current,
+            data: {
+              ...current.data,
+              posts: shouldSave
+                ? [
+                    post,
+                    ...current.data.posts.filter((item) => item.id !== post.id),
+                  ]
+                : current.data.posts.filter((item) => item.id !== post.id),
+            },
+          };
+        }
+      );
+
+      queryClient.invalidateQueries({ queryKey: ['saved-posts'] });
+    },
+  });
+
   function handleLike() {
     if (likeMutation.isPending) return;
 
     likeMutation.mutate(!liked);
+  }
+
+  function handleSave() {
+    if (saveMutation.isPending) return;
+
+    saveMutation.mutate(!saved);
   }
 
   const createdAt = new Date(post.createdAt).toLocaleDateString('id-ID', {
@@ -136,10 +191,16 @@ export function PostCard({ post }: PostCardProps) {
 
         <button
           type='button'
-          aria-label='Simpan postingan'
-          className='text-neutral-25'
+          aria-label={saved ? 'Hapus dari tersimpan' : 'Simpan postingan'}
+          aria-pressed={saved}
+          disabled={saveMutation.isPending}
+          onClick={handleSave}
+          className='text-neutral-25 disabled:opacity-50'
         >
-          <Bookmark size={24} />
+          <Bookmark
+            size={24}
+            className={saved ? 'fill-white text-white' : ''}
+          />
         </button>
       </div>
 

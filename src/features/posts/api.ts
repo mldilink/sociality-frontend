@@ -3,6 +3,8 @@ import type {
   PostsResponse,
   CommentsResponse,
   PostLikesResponse,
+  Post,
+  SavedPostsResponse,
 } from './types';
 
 export function getPosts(page = 1, limit = 20) {
@@ -56,4 +58,32 @@ export function unfollowUser(username: string) {
   return apiRequest<unknown>(`/api/follow/${encodeURIComponent(username)}`, {
     method: 'DELETE',
   });
+}
+
+export function savePost(postId: number) {
+  return apiRequest(`/api/posts/${postId}/save`, {
+    method: 'POST',
+  });
+}
+
+export function unsavePost(postId: number) {
+  return apiRequest(`/api/posts/${postId}/save`, {
+    method: 'DELETE',
+  });
+}
+
+export function getMySavedPosts(page = 1, limit = 20) {
+  return apiRequest<{
+    success: boolean;
+    message: string;
+    data: {
+      posts: Post[];
+      pagination: {
+        page: number;
+        limit: number;
+        total: number;
+        totalPages: number;
+      };
+    };
+  }>(`/api/me/saved?page=${page}&limit=${limit}`);
 }

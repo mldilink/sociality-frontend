@@ -81,3 +81,24 @@ export interface PostLikesResponse {
     };
   };
 }
+
+export interface SavedPost {
+  id: number;
+  imageUrl: string;
+  caption: string;
+  createdAt: string;
+}
+
+export interface SavedPostsResponse {
+  success: boolean;
+  message: string;
+  data: {
+    posts: SavedPost[];
+    pagination: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPages: number;
+    };
+  };
+}
