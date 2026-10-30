@@ -21,7 +21,7 @@ export function BottomNavigation() {
       </Link>
 
       <Link
-        href='/posts/create'
+        href='/add-post'
         aria-label='Add post'
         className='flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-300 text-neutral-25 md:size-12'
       >

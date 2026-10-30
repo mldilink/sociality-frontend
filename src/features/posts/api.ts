@@ -87,3 +87,15 @@ export function getMySavedPosts(page = 1, limit = 20) {
     };
   }>(`/api/me/saved?page=${page}&limit=${limit}`);
 }
+
+export async function createPost(image: File, caption: string) {
+  const formData = new FormData();
+
+  formData.append('image', image);
+  formData.append('caption', caption);
+
+  return apiRequest<unknown>('/api/posts', {
+    method: 'POST',
+    body: formData,
+  });
+}

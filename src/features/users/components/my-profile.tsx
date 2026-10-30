@@ -237,19 +237,19 @@ export default function MyProfile() {
         {/* Gallery */}
         {activeTab === 'grid' ? (
           isPostsLoading ? (
-            <p className='py-12 text-center text-sm text-[#A4A7AE]'>
+            <p className='py-12 text-center text-sm text-neutral-400'>
               Memuat postingan...
             </p>
           ) : postsError ? (
-            <p className='py-12 text-center text-sm text-[#A4A7AE]'>
+            <p className='py-12 text-center text-sm text-neutral-400'>
               {postsError}
             </p>
           ) : posts.length > 0 ? (
-            <div className='grid grid-cols-3 gap-[2px] md:gap-1'>
+            <div className='grid grid-cols-3 gap-xxs md:gap-1'>
               {posts.map((post) => (
                 <div
                   key={post.id}
-                  className='relative aspect-square overflow-hidden rounded-[2px] bg-[#181D27] md:rounded-md'
+                  className='relative aspect-square overflow-hidden rounded-xxs bg-neutral-900 md:rounded-md'
                 >
                   <Image
                     src={post.imageUrl}
@@ -263,24 +263,24 @@ export default function MyProfile() {
               ))}
             </div>
           ) : (
-            <p className='py-12 text-center text-sm text-[#A4A7AE]'>
+            <p className='py-12 text-center text-sm text-neutral-400'>
               Belum ada postingan.
             </p>
           )
         ) : isSavedLoading ? (
-          <p className='py-12 text-center text-sm text-[#A4A7AE]'>
+          <p className='py-12 text-center text-sm text-neutral-400'>
             Memuat Saved...
           </p>
         ) : isSavedError ? (
-          <p className='py-12 text-center text-sm text-[#A4A7AE]'>
+          <p className='py-12 text-center text-sm text-neutral-400'>
             Gagal memuat postingan tersimpan.
           </p>
         ) : savedPosts.length > 0 ? (
-          <div className='grid grid-cols-3 gap-[2px] md:gap-1'>
+          <div className='grid grid-cols-3 gap-xxs md:gap-1'>
             {savedPosts.map((post) => (
               <div
                 key={post.id}
-                className='relative aspect-square overflow-hidden rounded-[2px] bg-[#181D27] md:rounded-md'
+                className='relative aspect-square overflow-hidden rounded-xxs bg-neutral-900 md:rounded-md'
               >
                 <Image
                   src={post.imageUrl}
@@ -294,7 +294,7 @@ export default function MyProfile() {
             ))}
           </div>
         ) : (
-          <p className='py-12 text-center text-sm text-[#A4A7AE]'>
+          <p className='py-12 text-center text-sm text-neutral-400'>
             Belum ada postingan tersimpan.
           </p>
         )}
