@@ -7,13 +7,19 @@ import { BottomNavigation } from '@/components/layout/button-navigation';
 
 export default function MainLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const isAddPostPage = pathname === '/add-post';
+
+  const isStandalonePage =
+    pathname === '/add-post' || pathname === '/edit-profile';
 
   return (
     <div className='min-h-screen bg-black text-neutral-25'>
-      {!isAddPostPage && <Navbar />}
+      <div className={isStandalonePage ? 'hidden md:block' : ''}>
+        <Navbar />
+      </div>
+
       {children}
-      {!isAddPostPage && <BottomNavigation />}
+
+      {!isStandalonePage && <BottomNavigation />}
     </div>
   );
 }

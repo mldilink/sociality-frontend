@@ -16,7 +16,7 @@ export function SuccessAlert({ message, onClose }: SuccessAlertProps) {
   }, [onClose]);
 
   return (
-    <div className='flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#079455] px-3'>
+    <div className='flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-accent-green px-3'>
       <span className='min-w-0 flex-1 truncate text-sm font-semibold leading-7 tracking-[-0.02em] text-white'>
         {message}
       </span>

@@ -3,10 +3,14 @@
 import { useEffect, useState } from 'react';
 import { Bookmark, ArrowLeft, UserRound } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { getMyPosts, getMyProfile } from '@/features/users/api';
 import { getMySavedPosts } from '@/features/posts/api';
 import { useQuery } from '@tanstack/react-query';
 import type { Post } from '@/features/posts/types';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useCallback } from 'react';
+import { SuccessAlert } from '@/components/ui/succes-alert';
 
 import type {
   MyProfile as MyProfileData,
@@ -22,6 +26,15 @@ export default function MyProfile() {
   const [stats, setStats] = useState<MyProfileStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const isProfileUpdated = searchParams.get('success') === 'profile-updated';
+
+  const closeAlert = useCallback(() => {
+    router.replace('/me', { scroll: false });
+  }, [router]);
 
   const {
     data: savedResponse,
@@ -102,6 +115,14 @@ export default function MyProfile() {
 
   return (
     <main className='min-h-screen bg-black text-neutral-25'>
+      {isProfileUpdated && (
+        <div className='fixed left-1/2 top-29.25 z-50 w-72.75 -translate-x-1/2 md:left-auto md:right-30 md:translate-x-0'>
+          <SuccessAlert
+            message='Profile updated successfully'
+            onClose={closeAlert}
+          />
+        </div>
+      )}
       {/* Mobile header */}
       <header className='flex h-16 items-center justify-between border-b border-neutral-900 px-4 md:hidden'>
         <div className='flex items-center gap-4'>
@@ -141,9 +162,13 @@ export default function MyProfile() {
             </div>
 
             <div className='hidden items-center gap-2 md:flex'>
-              <button className='h-12 rounded-full border border-neutral-900 px-5 text-sm font-medium'>
+              <Link
+                href='/edit-profile'
+                aria-label='Edit profile'
+                className='flex items-center h-12 rounded-full border border-neutral-900 px-5 text-sm font-medium'
+              >
                 Edit Profile
-              </button>
+              </Link>
               <button
                 aria-label='Bagikan profil'
                 className='flex size-12 items-center justify-center rounded-full border border-neutral-900'
@@ -160,9 +185,13 @@ export default function MyProfile() {
 
           {/* Mobile actions */}
           <div className='flex gap-2 md:hidden'>
-            <button className='h-10 flex-1 rounded-full border border-neutral-900 text-sm font-medium'>
-              Edit Profile
-            </button>
+            <Link
+              href='/edit-profile'
+              aria-label='Edit profile'
+              className='flex h-10 flex-1 rounded-full border items-center justify-center border-neutral-900 text-sm font-medium'
+            >
+              Edit profile
+            </Link>
             <button
               aria-label='Bagikan profil'
               className='flex size-10 items-center justify-center rounded-full border border-neutral-900'

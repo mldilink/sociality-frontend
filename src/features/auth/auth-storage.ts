@@ -16,6 +16,10 @@ export function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY);
 }
 
+export function setUser(user: AuthUser): void {
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
+}
+
 export function getUser(): AuthUser | null {
   const value = localStorage.getItem(USER_KEY);
   if (!value) return null;

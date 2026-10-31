@@ -16,10 +16,20 @@ export function Navbar() {
   const [user, setUser] = useState<ReturnType<typeof getUser> | null>(null);
 
   useEffect(() => {
-    const token = getToken();
+    const updateUser = () => {
+      const token = getToken();
 
-    setIsLoggedIn(Boolean(token));
-    setUser(token ? getUser() : null);
+      setIsLoggedIn(Boolean(token));
+      setUser(token ? getUser() : null);
+    };
+
+    updateUser();
+
+    window.addEventListener('profile-updated', updateUser);
+
+    return () => {
+      window.removeEventListener('profile-updated', updateUser);
+    };
   }, []);
 
   return (
