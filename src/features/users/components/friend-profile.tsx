@@ -195,7 +195,7 @@ export default function FriendProfile({ username }: FriendProfileProps) {
                 className='flex size-12 items-center justify-center rounded-full border border-neutral-900'
               >
                 <Image
-                  src='/icons/share-icon.svg'
+                  src='/icons/Share-Icon.svg'
                   alt='icon share'
                   width={24}
                   height={24}
@@ -252,16 +252,21 @@ export default function FriendProfile({ username }: FriendProfileProps) {
                 : 'border-transparent text-neutral-400'
             }`}
           >
-            <Image
-              src='/icons/Grid.svg'
-              alt='Gallery'
-              width={24}
-              height={24}
-              className={
-                activeTab === 'posts'
-                  ? 'fill-white text-white'
-                  : 'text-neutral-400'
-              }
+            <span
+              aria-hidden='true'
+              className={`size-6 ${
+                activeTab === 'posts' ? 'bg-white' : 'bg-neutral-600'
+              }`}
+              style={{
+                maskImage: "url('/icons/Grid.svg')",
+                WebkitMaskImage: "url('/icons/Grid.svg')",
+                maskRepeat: 'no-repeat',
+                WebkitMaskRepeat: 'no-repeat',
+                maskPosition: 'center',
+                WebkitMaskPosition: 'center',
+                maskSize: 'contain',
+                WebkitMaskSize: 'contain',
+              }}
             />
             Gallery
           </button>

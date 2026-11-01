@@ -14,13 +14,12 @@ export default function MainLayoutContent({
   const pathname = usePathname();
 
   const isStandalonePage =
-    pathname === '/add-post' ||
-    pathname === '/edit-profile' ||
-    pathname === '/me';
+    pathname === '/add-post' || pathname === '/edit-profile';
 
+  const isMyProfile = pathname === '/me';
   const isFriendProfile = pathname.startsWith('/user/');
-  const hideMobileNavbar = isStandalonePage || isFriendProfile;
 
+  const hideMobileNavbar = isStandalonePage || isMyProfile || isFriendProfile;
   return (
     <div className='min-h-screen bg-black text-neutral-25'>
       <div className={hideMobileNavbar ? 'hidden md:block' : ''}>

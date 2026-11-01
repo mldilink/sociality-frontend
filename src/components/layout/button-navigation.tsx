@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Plus, UserRound } from 'lucide-react';
+import { Plus } from 'lucide-react';
+import Image from 'next/image';
 
 export function BottomNavigation() {
   const pathname = usePathname();
@@ -20,12 +21,27 @@ export function BottomNavigation() {
         aria-current={isHomeActive ? 'page' : undefined}
         className='flex h-11.5 w-23.5 flex-col items-center justify-center gap-0.5 md:h-14.5 md:gap-1'
       >
-        <Home
-          size={20}
-          className={`${isHomeActive ? 'text-primary-200' : 'text-neutral-25'} md:size-6`}
-        />
         <span
-          className={`text-xs md:text-base ${isHomeActive ? 'font-bold text-primary-200' : 'text-neutral-25'}`}
+          aria-hidden='true'
+          className={`size-5 md:size-6 ${
+            isHomeActive ? 'bg-primary-200' : 'bg-neutral-25'
+          }`}
+          style={{
+            maskImage: "url('/icons/Home.svg')",
+            WebkitMaskImage: "url('/icons/Home.svg')",
+            maskRepeat: 'no-repeat',
+            WebkitMaskRepeat: 'no-repeat',
+            maskPosition: 'center',
+            WebkitMaskPosition: 'center',
+            maskSize: 'contain',
+            WebkitMaskSize: 'contain',
+          }}
+        />
+
+        <span
+          className={`text-xs md:text-base ${
+            isHomeActive ? 'font-bold text-primary-200' : 'text-neutral-25'
+          }`}
         >
           Home
         </span>
@@ -44,12 +60,27 @@ export function BottomNavigation() {
         aria-current={isProfileActive ? 'page' : undefined}
         className='flex h-9.5 w-23.5 flex-col items-center justify-center gap-0.5 md:h-14.5 md:gap-1'
       >
-        <UserRound
-          size={20}
-          className={`${isProfileActive ? 'text-primary-200' : 'text-neutral-25'} md:size-6`}
-        />
         <span
-          className={`text-xs md:text-base ${isProfileActive ? 'font-bold text-primary-200' : 'text-neutral-25'}`}
+          aria-hidden='true'
+          className={`size-5 md:size-6 ${
+            isProfileActive ? 'bg-primary-200' : 'bg-neutral-25'
+          }`}
+          style={{
+            maskImage: "url('/icons/Profile.svg')",
+            WebkitMaskImage: "url('/icons/Profile.svg')",
+            maskRepeat: 'no-repeat',
+            WebkitMaskRepeat: 'no-repeat',
+            maskPosition: 'center',
+            WebkitMaskPosition: 'center',
+            maskSize: 'contain',
+            WebkitMaskSize: 'contain',
+          }}
+        />
+
+        <span
+          className={`text-xs md:text-base ${
+            isProfileActive ? 'font-bold text-primary-200' : 'text-neutral-25'
+          }`}
         >
           Profile
         </span>

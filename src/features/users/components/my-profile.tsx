@@ -197,7 +197,7 @@ export default function MyProfile() {
                 className='flex size-12 items-center justify-center rounded-full border border-neutral-900'
               >
                 <Image
-                  src='/icons/Share-icon.svg'
+                  src='/icons/Share-Icon.svg'
                   alt='send'
                   width={24}
                   height={24}
@@ -222,7 +222,7 @@ export default function MyProfile() {
               className='flex size-10 items-center justify-center rounded-full border border-neutral-900'
             >
               <Image
-                src='/icons/Share-icon.svg'
+                src='/icons/Share-Icon.svg'
                 alt='send'
                 width={24}
                 height={24}

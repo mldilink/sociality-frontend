@@ -203,7 +203,7 @@ export function PostCard({ post }: PostCardProps) {
             onClick={() => setShowComments(true)}
           >
             <Image
-              src='/icons/comment-icon.svg'
+              src='/icons/Comment-Icon.svg'
               alt='icon comment'
               width={24}
               height={24}
@@ -218,7 +218,7 @@ export function PostCard({ post }: PostCardProps) {
             className='text-neutral-25'
           >
             <Image
-              src='/icons/share-icon.svg'
+              src='/icons/Share-Icon.svg'
               alt='icon share'
               width={24}
               height={24}
