@@ -47,3 +47,48 @@ export interface MyProfilePostsResponse {
     };
   };
 }
+
+export interface FriendProfile {
+  id: number;
+  name: string;
+  username: string;
+  bio: string | null;
+  avatarUrl: string | null;
+  email: string;
+  phone: string | null;
+  counts: {
+    post: number;
+    followers: number;
+    following: number;
+    likes: number;
+  };
+  isFollowing: boolean;
+  isMe: boolean;
+}
+
+export interface FriendProfileResponse {
+  success: boolean;
+  message: string;
+  data: FriendProfile;
+}
+
+export interface Pagination {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+export interface FriendPostsResponse {
+  success: boolean;
+  message: string;
+  data: {
+    posts: Post[];
+    pagination: Pagination;
+  };
+}
+
+export interface FollowResponse {
+  success: boolean;
+  message: string;
+}

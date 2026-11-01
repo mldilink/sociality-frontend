@@ -92,7 +92,7 @@ export function DesktopUserSearch({
           {users.map((user) => (
             <Link
               key={user.id}
-              href={`/users/${encodeURIComponent(user.username)}`}
+              href={`/user/${encodeURIComponent(user.username)}`}
               onClick={() => setKeyword('')}
               className='flex min-h-14 w-full shrink-0 items-center gap-2'
             >

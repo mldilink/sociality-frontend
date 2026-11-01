@@ -4,6 +4,9 @@ import type {
   UpdateProfilePayload,
   MyProfilePostsResponse,
   MyProfile,
+  FriendProfileResponse,
+  FriendPostsResponse,
+  FollowResponse,
 } from './types';
 
 export interface SearchUser {
@@ -112,4 +115,68 @@ export interface UpdateProfileResponse {
   success: boolean;
   message: string;
   data: MyProfile;
+}
+
+export function followUser(username: string) {
+  return apiRequest<FollowResponse>(
+    `/api/follow/${encodeURIComponent(username)}`,
+    { method: 'POST' }
+  );
+}
+
+export function unfollowUser(username: string) {
+  return apiRequest<FollowResponse>(
+    `/api/follow/${encodeURIComponent(username)}`,
+    { method: 'DELETE' }
+  );
+}
+
+export function getUserFollowers(username: string, page = 1, limit = 20) {
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  });
+
+  return apiRequest(
+    `/api/users/${encodeURIComponent(username)}/followers?${params}`
+  );
+}
+
+export function getUserFollowing(username: string, page = 1, limit = 20) {
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  });
+
+  return apiRequest(
+    `/api/users/${encodeURIComponent(username)}/following?${params}`
+  );
+}
+
+export function getUserProfile(username: string) {
+  return apiRequest<FriendProfileResponse>(
+    `/api/users/${encodeURIComponent(username)}`
+  );
+}
+
+export function getUserPosts(username: string, page = 1, limit = 20) {
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  });
+
+  return apiRequest<FriendPostsResponse>(
+    `/api/users/${encodeURIComponent(username)}/posts?${params.toString()}`
+  );
+}
+
+export function getUserLikedPosts(username: string, page = 1, limit = 20) {
+  const params = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+  });
+
+  return apiRequest<FriendPostsResponse>(
+    `/api/users/${encodeURIComponent(username)}/likes?${params.toString()}`
+  );
 }

@@ -102,7 +102,7 @@ export function UserSearch({
             {users.map((user) => (
               <Link
                 key={user.id}
-                href={`/users/${encodeURIComponent(user.username)}`}
+                href={`/user/${encodeURIComponent(user.username)}`}
                 onClick={onClose}
                 className='flex items-center gap-2 px-2 py-1.5 hover:bg-neutral-900'
               >

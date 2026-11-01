@@ -11,9 +11,13 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   const isStandalonePage =
     pathname === '/add-post' || pathname === '/edit-profile';
 
+  const isFriendProfile = pathname.startsWith('/user/');
+
+  const hideMobileNavbar = isStandalonePage || isFriendProfile;
+
   return (
     <div className='min-h-screen bg-black text-neutral-25'>
-      <div className={isStandalonePage ? 'hidden md:block' : ''}>
+      <div className={hideMobileNavbar ? 'hidden md:block' : ''}>
         <Navbar />
       </div>
 

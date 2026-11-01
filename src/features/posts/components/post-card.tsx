@@ -14,6 +14,8 @@ import { Heart, Bookmark } from 'lucide-react';
 import type { Post } from '@/features/posts/types';
 import { LikesModal } from './likes-modal';
 import { CommentsModal } from './comments-modal';
+import Link from 'next/link';
+import { getUser } from '@/features/auth/auth-storage';
 
 interface PostCardProps {
   post: Post;
@@ -25,6 +27,12 @@ export function PostCard({ post }: PostCardProps) {
   const [likeCount, setLikeCount] = useState(post.likeCount);
   const [showComments, setShowComments] = useState(false);
   const [showLikes, setShowLikes] = useState(false);
+
+  const currentUser = getUser();
+  const isOwnPost = currentUser?.id === post.author.id;
+  const profileHref = isOwnPost
+    ? '/me'
+    : `/user/${encodeURIComponent(post.author.username)}`;
 
   const likeMutation = useMutation({
     mutationFn: (shouldLike: boolean) =>
@@ -101,7 +109,11 @@ export function PostCard({ post }: PostCardProps) {
   return (
     <article className='flex w-full flex-col gap-2 border-b border-neutral-900 pb-4 md:gap-3 md:pb-6'>
       <header className='flex items-center gap-2 md:gap-3'>
-        <div className='relative size-11 shrink-0 overflow-hidden rounded-full bg-neutral-900 md:size-16'>
+        <Link
+          href={profileHref}
+          aria-label={`Lihat profil ${post.author.username}`}
+          className='relative size-11 shrink-0 overflow-hidden rounded-full bg-neutral-900 md:size-16'
+        >
           {post.author.avatarUrl && (
             <Image
               src={post.author.avatarUrl}
@@ -111,12 +123,16 @@ export function PostCard({ post }: PostCardProps) {
               className='object-cover'
             />
           )}
-        </div>
+        </Link>
 
         <div className='min-w-0'>
-          <p className='truncate text-sm font-bold text-neutral-25 md:text-base'>
-            {post.author.username}
-          </p>
+          <Link
+            href={profileHref}
+            className='truncate text-sm font-bold text-neutral-25 md:text-base'
+          >
+            <p>{post.author.username}</p>
+          </Link>
+
           <time dateTime={post.createdAt} className='text-xs text-neutral-400'>
             {createdAt}
           </time>
