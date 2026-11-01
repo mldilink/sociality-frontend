@@ -32,6 +32,25 @@ export default function MyProfile() {
 
   const isProfileUpdated = searchParams.get('success') === 'profile-updated';
 
+  async function handleShare() {
+    const profileUrl = `${window.location.origin}/me`;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: `${profile?.name ?? 'My'} Profile`,
+          url: profileUrl,
+        });
+      } else {
+        await navigator.clipboard.writeText(profileUrl);
+      }
+    } catch (error) {
+      if (error instanceof Error && error.name !== 'AbortError') {
+        console.error('Gagal membagikan profil:', error);
+      }
+    }
+  }
+
   const closeAlert = useCallback(() => {
     router.replace('/me', { scroll: false });
   }, [router]);
@@ -126,13 +145,15 @@ export default function MyProfile() {
       {/* Mobile header */}
       <header className='flex h-16 items-center justify-between border-b border-neutral-900 px-4 md:hidden'>
         <div className='flex items-center gap-4'>
-          <button aria-label='Kembali'>
+          <button
+            type='button'
+            onClick={() => router.back()}
+            aria-label='Kembali'
+          >
             <ArrowLeft size={24} />
           </button>
-          <span className='text-base font-semibold'>My Profile</span>
+          <span className='text-base font-semibold'>{profile.username}</span>
         </div>
-
-        <UserRound size={24} />
       </header>
 
       <section className='mx-auto flex w-full max-w-203 flex-col gap-6 px-4 pb-24 pt-8 md:px-0 md:pt-30'>
@@ -170,7 +191,9 @@ export default function MyProfile() {
                 Edit Profile
               </Link>
               <button
+                type='button'
                 aria-label='Bagikan profil'
+                onClick={handleShare}
                 className='flex size-12 items-center justify-center rounded-full border border-neutral-900'
               >
                 <Image
@@ -193,7 +216,9 @@ export default function MyProfile() {
               Edit profile
             </Link>
             <button
+              type='button'
               aria-label='Bagikan profil'
+              onClick={handleShare}
               className='flex size-10 items-center justify-center rounded-full border border-neutral-900'
             >
               <Image

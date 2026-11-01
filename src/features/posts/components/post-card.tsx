@@ -100,6 +100,26 @@ export function PostCard({ post }: PostCardProps) {
     saveMutation.mutate(!saved);
   }
 
+  async function handleShare() {
+    const postUrl = `${window.location.origin}/post/${post.id}`;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: `Post by ${post.author.username}`,
+          text: post.caption || 'Check out this post!',
+          url: postUrl,
+        });
+      } else {
+        await navigator.clipboard.writeText(postUrl);
+      }
+    } catch (error) {
+      if (error instanceof Error && error.name !== 'AbortError') {
+        console.error('Gagal membagikan postingan:', error);
+      }
+    }
+  }
+
   const createdAt = new Date(post.createdAt).toLocaleDateString('id-ID', {
     day: 'numeric',
     month: 'short',
@@ -194,6 +214,7 @@ export function PostCard({ post }: PostCardProps) {
           <button
             type='button'
             aria-label='Bagikan'
+            onClick={handleShare}
             className='text-neutral-25'
           >
             <Image

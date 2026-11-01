@@ -194,7 +194,12 @@ export default function FriendProfile({ username }: FriendProfileProps) {
                 aria-label='Bagikan profil'
                 className='flex size-12 items-center justify-center rounded-full border border-neutral-900'
               >
-                <Send size={24} />
+                <Image
+                  src='/icons/share-icon.svg'
+                  alt='icon share'
+                  width={24}
+                  height={24}
+                />
               </button>
             </div>
           </div>

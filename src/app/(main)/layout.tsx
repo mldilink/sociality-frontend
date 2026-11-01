@@ -1,29 +1,11 @@
-'use client';
-
+import { Suspense } from 'react';
 import type { ReactNode } from 'react';
-import { usePathname } from 'next/navigation';
-import { Navbar } from '@/components/layout/navbar';
-import { BottomNavigation } from '@/components/layout/button-navigation';
+import MainLayoutContent from './main-layout-content';
 
 export default function MainLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-
-  const isStandalonePage =
-    pathname === '/add-post' || pathname === '/edit-profile';
-
-  const isFriendProfile = pathname.startsWith('/user/');
-
-  const hideMobileNavbar = isStandalonePage || isFriendProfile;
-
   return (
-    <div className='min-h-screen bg-black text-neutral-25'>
-      <div className={hideMobileNavbar ? 'hidden md:block' : ''}>
-        <Navbar />
-      </div>
-
-      {children}
-
-      {!isStandalonePage && <BottomNavigation />}
-    </div>
+    <Suspense fallback={<div className='min-h-screen bg-black' />}>
+      <MainLayoutContent>{children}</MainLayoutContent>
+    </Suspense>
   );
 }
