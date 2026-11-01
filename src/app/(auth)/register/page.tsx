@@ -90,7 +90,7 @@ export default function RegisterPage() {
       <section className='relative z-10 flex w-full max-w-130 flex-col items-center gap-xl rounded-2xl border border-neutral-900 bg-black/20 px-xl py-8 backdrop-blur-[50px] md:gap-2xl md:px-2xl md:py-4xl'>
         {/* Brand */}
         <div className='flex h-9 items-center gap-2.75'>
-          <Image src='/icons/logo.svg' alt='Sociality' width={30} height={30} />
+          <Image src='/icons/Logo.svg' alt='Sociality' width={30} height={30} />
           <span className='text-display-xs font-bold'>Sociality</span>
         </div>
 

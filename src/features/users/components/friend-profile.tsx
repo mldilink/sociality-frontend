@@ -4,14 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  ArrowLeft,
-  CheckCircle2,
-  Grid3X3,
-  Heart,
-  Send,
-  UserRound,
-} from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Heart, Send, UserRound } from 'lucide-react';
 
 import {
   followUser,

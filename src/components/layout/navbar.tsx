@@ -50,7 +50,7 @@ export function Navbar() {
               className='flex shrink-0 items-center gap-2.75'
             >
               <Image
-                src='/icons/logo.svg'
+                src='/icons/Logo.svg'
                 alt='Sociality'
                 width={30}
                 height={30}
