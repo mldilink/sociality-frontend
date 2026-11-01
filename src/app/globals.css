@@ -1,0 +1,276 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@font-face {
+  font-family: 'SF Pro';
+  src: url('/fonts/SF-Pro.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+/* ========================================
+   DESIGN TOKENS — COLORS
+======================================== */
+
+@theme inline {
+  /* Typography */
+  --font-sans: 'SF Pro', Arial, sans-serif;
+  --font-mono: var(--font-geist-mono);
+  --font-heading: 'SF Pro', Arial, sans-serif;
+
+  /* Primary palette */
+  --color-primary-100: #f6f9fe;
+  --color-primary-200: #7f51f9;
+  --color-primary-300: #6936f2;
+
+  /* Neutral palette */
+  --color-neutral-25: #fdfdfd;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e9eaeb;
+  --color-neutral-300: #d5d7da;
+  --color-neutral-400: #a4a7ae;
+  --color-neutral-500: #717680;
+  --color-neutral-600: #535862;
+  --color-neutral-700: #414651;
+  --color-neutral-800: #252b37;
+  --color-neutral-900: #181d27;
+  --color-neutral-950: #0a0d12;
+
+  /* Accent palette */
+  --color-accent-red: #d9206e;
+  --color-accent-green: #079455;
+  --color-accent-yellow: #fdb022;
+
+  /* Base */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Semantic colors — shadcn/ui */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Spacing — 16px base */
+  --spacing-none: 0rem;
+  --spacing-xxs: 0.125rem;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.375rem;
+  --spacing-md: 0.5rem;
+  --spacing-lg: 0.75rem;
+  --spacing-xl: 1rem;
+  --spacing-2xl: 1.25rem;
+  --spacing-3xl: 1.5rem;
+  --spacing-4xl: 2rem;
+  --spacing-5xl: 2.5rem;
+  --spacing-6xl: 3rem;
+  --spacing-7xl: 4rem;
+  --spacing-8xl: 5rem;
+  --spacing-9xl: 6rem;
+  --spacing-10xl: 8rem;
+  --spacing-11xl: 8.75rem;
+
+  /* Radius — design system */
+  --radius-none: 0rem;
+  --radius-xxs: 0.125rem;
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.25rem;
+  --radius-4xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Typography scale */
+  --text-display-3xl: 3.75rem;
+  --text-display-3xl--line-height: 4.5rem;
+
+  --text-display-2xl: 3rem;
+  --text-display-2xl--line-height: 3.75rem;
+  --text-display-2xl--letter-spacing: -0.02em;
+
+  --text-display-xl: 2.5rem;
+  --text-display-xl--line-height: 3rem;
+  --text-display-xl--letter-spacing: -0.02em;
+
+  --text-display-lg: 2.25rem;
+  --text-display-lg--line-height: 2.75rem;
+  --text-display-lg--letter-spacing: -0.02em;
+
+  --text-display-md: 2rem;
+  --text-display-md--line-height: 2.5rem;
+
+  --text-display-sm: 1.75rem;
+  --text-display-sm--line-height: 2.375rem;
+
+  --text-display-xs: 1.5rem;
+  --text-display-xs--line-height: 2.25rem;
+
+  --text-text-xl: 1.25rem;
+  --text-text-xl--line-height: 2.125rem;
+
+  --text-text-lg: 1.125rem;
+  --text-text-lg--line-height: 2rem;
+
+  --text-text-md: 1rem;
+  --text-text-md--line-height: 1.875rem;
+
+  --text-text-sm: 0.875rem;
+  --text-text-sm--line-height: 1.75rem;
+
+  --text-text-xs: 0.75rem;
+  --text-text-xs--line-height: 1.5rem;
+
+  /* shadcn radius mapping */
+  --radius: 0.625rem;
+}
+
+/* ========================================
+   LIGHT THEME
+======================================== */
+
+:root {
+  color-scheme: light;
+
+  --background: #fdfdfd;
+  --foreground: #181d27;
+
+  --card: #ffffff;
+  --card-foreground: #181d27;
+
+  --popover: #ffffff;
+  --popover-foreground: #181d27;
+
+  --primary: #6936f2;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f5f5f5;
+  --secondary-foreground: #252b37;
+
+  --muted: #f5f5f5;
+  --muted-foreground: #535862;
+
+  --accent: #f6f9fe;
+  --accent-foreground: #252b37;
+
+  --destructive: #d9206e;
+
+  --border: #e9eaeb;
+  --input: #d5d7da;
+  --ring: #7f51f9;
+
+  --chart-1: #7f51f9;
+  --chart-2: #079455;
+  --chart-3: #d9206e;
+  --chart-4: #fdb022;
+  --chart-5: #535862;
+
+  --sidebar: #fafafa;
+  --sidebar-foreground: #181d27;
+  --sidebar-primary: #6936f2;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f5f5f5;
+  --sidebar-accent-foreground: #252b37;
+  --sidebar-border: #e9eaeb;
+  --sidebar-ring: #7f51f9;
+}
+
+/* ========================================
+   DARK THEME
+======================================== */
+
+.dark {
+  color-scheme: dark;
+
+  --background: #0a0d12;
+  --foreground: #fdfdfd;
+
+  --card: #181d27;
+  --card-foreground: #fdfdfd;
+
+  --popover: #181d27;
+  --popover-foreground: #fdfdfd;
+
+  --primary: #7f51f9;
+  --primary-foreground: #ffffff;
+
+  --secondary: #252b37;
+  --secondary-foreground: #fdfdfd;
+
+  --muted: #252b37;
+  --muted-foreground: #a4a7ae;
+
+  --accent: #252b37;
+  --accent-foreground: #fdfdfd;
+
+  --destructive: #d9206e;
+
+  --border: #414651;
+  --input: #535862;
+  --ring: #7f51f9;
+
+  --chart-1: #7f51f9;
+  --chart-2: #079455;
+  --chart-3: #d9206e;
+  --chart-4: #fdb022;
+  --chart-5: #a4a7ae;
+
+  --sidebar: #181d27;
+  --sidebar-foreground: #fdfdfd;
+  --sidebar-primary: #7f51f9;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #252b37;
+  --sidebar-accent-foreground: #fdfdfd;
+  --sidebar-border: #414651;
+  --sidebar-ring: #7f51f9;
+}
+
+/* ========================================
+   BASE STYLES
+======================================== */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-weight: 400;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    font-family: 'SF Pro', Arial, sans-serif;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
